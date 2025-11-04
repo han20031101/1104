@@ -33,7 +33,6 @@ if ($postid <= 0) {
 
 // 處理表單送出（更新）
 if (isset($_GET['action']) && $_GET['action'] === 'confirmed') {
-    // 只接受 POST 的欄位，但 postid 從 GET 來（與你提供的範例一致）
     $postid = intval($_GET['postid'] ?? 0);
     $company = isset($_POST['company']) ? trim($_POST['company']) : '';
     $content = isset($_POST['content']) ? trim($_POST['content']) : '';

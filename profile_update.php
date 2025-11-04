@@ -29,7 +29,6 @@ if (!mysqli_stmt_prepare($stmt_select, $sql_select)) {
     if (mysqli_stmt_fetch($stmt_select)) {
         $name = $r_name;
     } else {
-        // 理論上不會發生，因為 Session 中有 account
         $error = '找不到使用者資料';
         mysqli_stmt_close($stmt_select);
         mysqli_close($conn);
@@ -60,9 +59,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $name = $new_name; // 立即更新 $name 讓表單顯示新值
     }
 
-    // b. 驗證密碼（新增的邏輯：只有在新密碼欄位不為空時才執行密碼檢查）
+    // b. 驗證密碼（只有在新密碼欄位不為空時才執行密碼檢查）
     if (!$has_error && $new_password !== '') {
-        $update_password = true; // 標記為需要更新密碼
+        $update_password = true; 
 
         if ($old_password === '') {
             $error = '請輸入舊密碼進行驗證';
@@ -73,8 +72,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }elseif ($new_password !== $confirm_password) {
             $error = '新密碼與確認密碼不一致';
             $has_error = true;
-        // 🚨 注意: 您的 user.sql 密碼是明文儲存，這裡直接比對明文。
-        // $r_password_hash 來自 SELECT 語句
         } 
     }
 
@@ -93,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($update_password) {
             $fields[] = '`password` = ?';
             $bind_types .= 's';
-            $bind_values[] = $new_password; // 🚨 注意: 這裡仍是明文儲存
+            $bind_values[] = $new_password;
         }
         
         $sql_update = "UPDATE `user` SET " . implode(', ', $fields) . " WHERE `account` = ? LIMIT 1";
@@ -122,7 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // 關閉連線並顯示頁面
 if (isset($conn)) mysqli_close($conn);
 
-include 'header.php'; // 確保 header.php 存在並包含導覽列
+include 'header.php'; 
 
 ?>
 

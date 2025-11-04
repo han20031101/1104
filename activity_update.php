@@ -17,7 +17,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'M') {
     exit;
 }
 
-// 取得 id（POST 優先，然後 GET）
+// 取得 id
 $id = 0;
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
     $id = intval($_POST['id']);

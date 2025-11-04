@@ -38,6 +38,7 @@ try {
     <input placeholder="搜尋廠商及內容" type="text" name="searchtxt" value="<?=htmlspecialchars($searchtxt)?>">
     <input class="btn btn-primary" type="submit" value="搜尋">
   </form>
+  
 
   <table class="table table-bordered table-striped">
   <tr>
